@@ -1,25 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Suspense } from "react";
+import { useRoutes } from "react-router-dom";
+
+import { Footer } from "./layout/components/footer";
+import { Header } from "./layout/components/header";
+import { PageLoader } from "./components/PageLoader";
+import { routeConfig } from "./shared/config/routeConfig/routeConfig";
 
 function App() {
+  const routes = useRoutes(routeConfig);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Suspense fallback={<PageLoader />}>
+      <Header />
+      <main className="container">{routes}</main>
+      <Footer />
+    </Suspense>
   );
 }
 
